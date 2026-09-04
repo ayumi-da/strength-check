@@ -58,7 +58,12 @@
                 )
             );
 
-        console.log(answers);
+        document.body.insertAdjacentHTML(
+            "beforeend",
+            "<pre>" +
+            JSON.stringify(answers, null, 2) +
+            "</pre>"
+        );
 
     </script>
 
