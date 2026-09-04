@@ -39,32 +39,32 @@
 
         <h2>あなたの強み TOP5</h2>
 
-        <ol>
-            <li>創造性</li>
-            <li>チームワーク</li>
-            <li>知的柔軟性</li>
-            <li>リーダーシップ</li>
-            <li>向学心</li>
-        </ol>
+        <div id="answer-test">
+    	    回答データを確認しています
+	</div>
 
     </div>
 
     <script>
+    	const savedData =
+    	    sessionStorage.getItem("strengthAnswers");
 
-        const answers =
-            JSON.parse(
-                sessionStorage.getItem(
-                    "strengthAnswers"
-                )
-            );
+    	const answerTest =
+    	    document.getElementById("answer-test");
 
-        document.body.insertAdjacentHTML(
-            "beforeend",
-            "<pre>" +
-            JSON.stringify(answers, null, 2) +
-            "</pre>"
-        );
+    	if (savedData === null) {
+    	    answerTest.textContent =
+    	        "回答データが保存されていません";
+    	} else {
+    	    const answers =
+    	        JSON.parse(savedData);
 
+    	    answerTest.innerHTML =
+    	        "<p>保存された回答：</p>" +
+    	        "<pre>" +
+    	        JSON.stringify(answers, null, 2) +
+    	        "</pre>";
+    	}
     </script>
 
 
