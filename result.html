@@ -27,6 +27,76 @@
             text-align:center;
         }
 
+	.category-row{
+	    display:flex;
+	    justify-content:space-between;
+	    align-items:center;
+	    padding:12px 0;
+	    border-bottom:1px solid #eeeeee;
+	}
+
+	.category-block{
+	    margin-bottom:20px;
+	}
+
+	.category-header{
+	    display:flex;
+	    justify-content:space-between;
+	    margin-bottom:6px;
+	    font-weight:bold;
+	}
+
+	.bar-bg{
+	    width:100%;
+	    height:18px;
+	    background:#e5e5e5;
+	    border-radius:20px;
+	    overflow:hidden;
+	}
+
+	.bar-fill{
+	    height:100%;
+	    background:#43a047;
+	    border-radius:20px;
+	    transition:0.5s;
+	}
+
+.strength-card{
+
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    margin-bottom:20px;
+
+}
+
+.strength-image{
+
+    width:70px;
+
+}
+
+.strength-name{
+
+    font-size:32px;
+
+    font-weight:bold;
+
+}
+
+.strength-description{
+
+    margin-top:10px;
+
+    line-height:1.8;
+
+}
+
     </style>
 
 </head>
@@ -37,35 +107,241 @@
 
         <h1>診断結果</h1>
 
-        <h2>あなたの強み TOP5</h2>
+	<h2>カテゴリ別結果</h2>
 
-        <div id="answer-test">
-    	    回答データを確認しています
-	</div>
+	<div id="categoryResult"></div>
+
+	<h2>あなたの強み TOP5</h2>
+
+        <div id="top5Result"></div>
 
     </div>
 
-    <script>
-    	const savedData =
-    	    sessionStorage.getItem("strengthAnswers");
+<script>
 
-    	const answerTest =
-    	    document.getElementById("answer-test");
+const answers =
+    JSON.parse(
+        sessionStorage.getItem(
+            "strengthAnswers"
+        )
+    );
 
-    	if (savedData === null) {
-    	    answerTest.textContent =
-    	        "回答データが保存されていません";
-    	} else {
-    	    const answers =
-    	        JSON.parse(savedData);
+const categoryInfo = {
 
-    	    answerTest.innerHTML =
-    	        "<p>保存された回答：</p>" +
-    	        "<pre>" +
-    	        JSON.stringify(answers, null, 2) +
-    	        "</pre>";
-    	}
-    </script>
+    "知恵": {
+        image:"images/wisdom.png",
+        color:"#FFECCD"
+    },
+
+    "勇気": {
+        image:"images/courage.png",
+        color:"#FFDFD1"
+    },
+
+    "人間力": {
+        image:"images/humanity.png",
+        color:"#FFD9DC"
+    },
+
+    "正義": {
+        image:"images/justice.png",
+        color:"#D1EBE4"
+    },
+
+    "節制力": {
+        image:"images/temperance.png",
+        color:"#E5F8FF"
+    },
+
+    "超越性": {
+        image:"images/transcendence.png",
+        color:"#E0CEF2"
+    }
+
+};
+
+const categoryScores = {
+    "知恵": 0,
+    "勇気": 0,
+    "人間力": 0,
+    "正義": 0,
+    "節制力": 0,
+    "超越性": 0
+};
+
+const categoryMax = {
+    "知恵": 35,
+    "勇気": 28,
+    "人間力": 21,
+    "正義": 21,
+    "節制力": 28,
+    "超越性": 35
+};
+
+Object.values(answers).forEach(answer => {
+
+    categoryScores[
+        answer.category
+    ] += answer.score;
+
+});
+
+let html = "";
+
+Object.keys(categoryScores).forEach(category => {
+
+    const score =
+        categoryScores[category];
+
+    const max =
+        categoryMax[category];
+
+    const percent =
+        Math.round(
+            score / max * 100
+        );
+
+    const categoryColors = {
+    "知恵": "#FFAB24",
+    "勇気": "#FF6A28",
+    "人間力": "#FE2633",
+    "正義": "#439D86",
+    "節制力": "#AFEBFF",
+    "超越性": "#602897"
+};
+
+
+    html += `
+    <div class="category-block">
+
+        <div class="category-header">
+            <span>${category}</span>
+            <span>${percent}%</span>
+        </div>
+
+        <div class="bar-bg">
+            <div
+                class="bar-fill"
+                style="
+                    width:${percent}%;
+                    background:${categoryColors[category]};
+                "
+            ></div>
+        </div>
+
+    </div>
+`;
+
+});
+
+document.getElementById(
+    "categoryResult"
+).innerHTML = html;
+
+const categoryPercent = {};
+
+Object.keys(categoryScores).forEach(category => {
+
+    categoryPercent[category] =
+        categoryScores[category]
+        /
+        categoryMax[category]
+        * 100;
+
+});
+
+const strengthRanking =
+    Object.values(answers);
+
+strengthRanking.sort((a, b) => {
+
+    if (a.score !== b.score) {
+
+        return b.score - a.score;
+
+    }
+
+    return (
+        categoryPercent[b.category]
+        -
+        categoryPercent[a.category]
+    );
+
+});
+
+const categoryPercent = {};
+
+Object.keys(categoryScores).forEach(category => {
+
+    categoryPercent[category] =
+        categoryScores[category]
+        /
+        categoryMax[category]
+        * 100;
+
+});
+
+const strengthRanking =
+    Object.values(answers);
+
+strengthRanking.sort((a, b) => {
+
+    // まず点数順
+
+    if(a.score !== b.score){
+
+        return b.score - a.score;
+
+    }
+
+    // 同点ならカテゴリ％
+
+    return (
+        categoryPercent[b.category]
+        -
+        categoryPercent[a.category]
+    );
+
+});
+
+console.log(
+    strengthRanking.slice(0,5)
+);
+
+const top1 =
+    strengthRanking[0];
+
+document.getElementById(
+    "top5Result"
+).innerHTML = `
+
+    <h3>1位</h3>
+
+    <div
+        class="strength-card"
+        style="
+            background:
+            ${categoryInfo[top1.category].color};
+        "
+    >
+
+        <img
+            src="${categoryInfo[top1.category].image}"      <div class="strength-name">
+                ${top1.strength}
+            </div>
+
+            <div class="strength-description">
+                ここに説明文
+            </div>
+
+        </div>
+
+    </div>
+
+`;
+
+
+</script>
 
 
 </body>

@@ -86,49 +86,92 @@
             background-color: #43a047;
         }
 
+	.result-button button:disabled{
+	    background:#999;
+	    cursor:not-allowed;
+	}
+
     </style>
 </head>
 
 <script>
 
-const answers = {};
+    const answers = {};
 
-function selectScore(button) {
+    function selectScore(button) {
 
-    const questionCard = button.closest('.question-card');
+        const questionCard =
+            button.closest(".question-card");
 
-    const buttons =
-        questionCard.querySelectorAll('.score-buttons button');
+        const buttons =
+            questionCard.querySelectorAll(
+                ".score-buttons button"
+            );
 
-    buttons.forEach(btn => {
-        btn.classList.remove('selected');
-    });
+        buttons.forEach(btn => {
+            btn.classList.remove("selected");
+        });
 
-    button.classList.add('selected');
+        button.classList.add("selected");
 
-    const questionNumber =
-        questionCard.querySelector(
-            '.question-number'
-        ).textContent;
+        const strength =
+            questionCard.dataset.strength;
 
-    const score = button.textContent;
+        const category =
+            questionCard.dataset.category;
 
-    answers[questionNumber] = score;
+        const score =
+            Number(button.textContent.trim());
 
-    console.log(answers);
+        answers[strength] = {
+            strength: strength,
+            category: category,
+            score: score
+        };
 
-    sessionStorage.setItem(
-        "strengthAnswers",
-        JSON.stringify(answers)
-    );
+        sessionStorage.setItem(
+            "strengthAnswers",
+            JSON.stringify(answers)
+        );
+	updateProgress();
+    }
 
-}
+    function updateProgress(){
+
+        const answeredCount =
+            Object.keys(answers).length;
+
+        const resultBtn =
+            document.getElementById("resultBtn");
+
+        if(answeredCount < 24){
+
+            resultBtn.textContent =
+                `${answeredCount} / 24`;
+
+            resultBtn.disabled = true;
+
+        }else{
+
+            resultBtn.textContent =
+                "診断結果を見る";
+
+            resultBtn.disabled = false;
+
+        }
+
+    }
 
 </script>
 
 <body>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="創造性"
+    	data-category="知恵"
+    >
+
 
         <div class="question-number">
             Q1 / 24
@@ -157,7 +200,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="好奇心"
+    	data-category="知恵"
+    >
 
         <div class="question-number">
             Q2 / 24
@@ -186,7 +233,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="知的柔軟性"
+    	data-category="知恵"
+    >
 
         <div class="question-number">
             Q3 / 24
@@ -215,7 +266,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="向学心"
+    	data-category="知恵"
+    >
 
         <div class="question-number">
             Q4 / 24
@@ -244,7 +299,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="大局観"
+    	data-category="知恵"
+    >
 
         <div class="question-number">
             Q5 / 24
@@ -273,7 +332,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="勇敢さ"
+    	data-category="勇気"
+    >
 
         <div class="question-number">
             Q6 / 24
@@ -302,7 +365,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="忍耐力"
+    	data-category="勇気"
+    >
 
         <div class="question-number">
             Q7 / 24
@@ -331,7 +398,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="誠実さ"
+    	data-category="勇気"
+    >
 
         <div class="question-number">
             Q8 / 24
@@ -360,7 +431,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="熱意"
+    	data-category="勇気"
+    >
 
         <div class="question-number">
             Q9 / 24
@@ -389,7 +464,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="愛情"
+    	data-category="人間力"
+    >
 
         <div class="question-number">
             Q10 / 24
@@ -418,7 +497,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="親切心"
+    	data-category="人間力"
+    >
 
         <div class="question-number">
             Q11 / 24
@@ -447,7 +530,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="社会的知性"
+    	data-category="人間力"
+    >
 
         <div class="question-number">
             Q12 / 24
@@ -476,7 +563,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="チームワーク"
+    	data-category="正義"
+    >
 
         <div class="question-number">
             Q13 / 24
@@ -505,7 +596,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="公平性"
+    	data-category="正義"
+    >
 
         <div class="question-number">
             Q14 / 24
@@ -534,7 +629,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="リーダーシップ"
+    	data-category="正義"
+    >
 
         <div class="question-number">
             Q15 / 24
@@ -563,7 +662,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="寛容さ"
+    	data-category="節制力"
+    >
 
         <div class="question-number">
             Q16 / 24
@@ -592,7 +695,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="慎み深さ"
+    	data-category="節制力"
+    >
 
         <div class="question-number">
             Q17 / 24
@@ -621,7 +728,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="思慮深さ"
+    	data-category="節制力"
+    >
 
         <div class="question-number">
             Q18 / 24
@@ -650,7 +761,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="自立心"
+    	data-category="節制力"
+    >
 
         <div class="question-number">
             Q19 / 24
@@ -679,7 +794,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="審美眼"
+    	data-category="超越性"
+    >
 
         <div class="question-number">
             Q20 / 24
@@ -708,7 +827,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="感謝"
+    	data-category="超越性"
+    >
 
         <div class="question-number">
             Q21 / 24
@@ -737,7 +860,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="希望"
+    	data-category="超越性"
+    >
 
         <div class="question-number">
             Q22 / 24
@@ -766,7 +893,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="ユーモア"
+    	data-category="超越性"
+    >
 
         <div class="question-number">
             Q23 / 24
@@ -795,7 +926,11 @@ function selectScore(button) {
 
     </div>
 
-    <div class="question-card">
+    <div
+	class="question-card"
+    	data-strength="スピリチュアリティ"
+    	data-category="超越性"
+    >
 
         <div class="question-number">
             Q24 / 24
@@ -825,8 +960,12 @@ function selectScore(button) {
     </div>
 
     <div class="result-button">
-        <button onclick="location.href='result.html'">
-            診断結果を見る
+        <button
+            id="resultBtn"
+            onclick="location.href='result.html'"
+            disabled
+        >
+            0 / 24
         </button>
     </div>
 
