@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>強み診断</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .description {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .image-card {
+    	    border-radius: 10px;
+    	    padding: 15px;
+	    min-height:100px;
+    	    display: flex;
+   	    align-items: center;
+    	    gap: 15px;
+	}
+
+	.category-text h3{
+	    margin:0 0 10px 0;
+	    font-size:26px;
+	    font-weight:bold;
+	}
+	.category-text p{
+	    margin:0;
+	    line-height:1.5;
+	}
+	.category-text{
+	    flex:1;
+	    display:flex;
+	    flex-direction:column;
+	    justify-content:center;
+	}
+
+	.wisdom-card{
+    	    background:#FFECCD;
+	}
+	.courage-card{
+ 	    background:#FFDFD1;
+	}
+	.humanity-card{
+	    background:#FFD9DC;
+	}
+	.justice-card{
+	    background:#D1EBE4;
+	}
+	.temperance-card{
+	    background:#E5F8FF;
+	}
+	.transcendence-card{
+	    background:#E0CEF2;
+	}
+
+        .start-button {
+            margin-top: 25px;
+        }
+
+        .start-button button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background-color: #222222;
+            color: white;
+            cursor: pointer;
+        }
+
+        .start-button button:hover {
+            background-color: #43a047;
+        }
+
+        @media (max-width: 600px) {
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>強み診断</h1>
+
+        <div class="description">
+            <p>
+                全24問の質問に回答すると、
+                あなたの強みTOP5を表示します。
+            </p>
+
+            <p>
+                各質問を1～7点で評価してください。
+            </p>
+        </div>
+
+        <div class="image-grid">
+
+            <div class="image-card wisdom-card">
+                <img src="images/wisdom.png"
+		     alt="知恵">
+		<div class="category-text">
+			<h3>知恵</h3>
+			<p>知的な動きが大きな役割を持つ強み</p>
+		</div>
+            </div>
+
+            <div class="image-card courage-card">
+                <img src="images/courage.png"
+		     alt="勇気">
+		<div class="category-text">
+			<h3>勇気</h3>
+			<p>ゴール実現の障害に対する情的な強み</p>
+		</div>
+            </div>
+
+            <div class="image-card humanity-card">
+                <img src="images/humanity.png"
+		     alt="人間力">
+		<div class="category-text">
+			<h3>人間力</h3>
+			<p>個人から生み出され発揮される強み</p>
+		</div>
+            </div>
+
+            <div class="image-card justice-card">
+                <img src="images/justice.png"
+		     alt="正義">
+		<div class="category-text">
+			<h3>正義</h3>
+			<p>他者を助け、面倒を見る対人関係の強み</p>
+		</div>
+            </div>
+
+            <div class="image-card temperance-card">
+                <img src="images/temperance.png"
+		     alt="節制力">
+		<div class="category-text">
+			<h3>節制力</h3>
+			<p>自己に対する適切な抑制の強み</p>
+		</div>
+            </div>
+
+            <div class="image-card transcendence-card">
+                <img src="images/transcendence.png"
+		     alt="超越性">
+		<div class="category-text">
+			<h3>超越性</h3>
+			<p>森羅万象とのつながりや意義を見出す強み</p>
+		</div>
+            </div>
+
+        </div>
+
+        <div class="start-button">
+            <button onclick="location.href='question.html'">
+                診断を始める
+            </button>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

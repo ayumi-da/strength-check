@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>強み診断</title>
+
+    <style>
+
+        body{
+            font-family:sans-serif;
+	    background-color: #f5f5f5;
+            max-width:800px;
+            margin:auto;
+            padding:20px;
+        }
+
+        .question-card{
+            background:white;
+            padding:30px;
+            border-radius:15px;
+	    margin-bottom:25px;
+	    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        }
+
+	.question-number{
+	    color:#777;
+	    font-size:16px;
+	    margin-bottom:15px;
+	}
+	
+	.question-text{
+	    font-size:20px;
+	    line-height:1.8;
+	    margin-bottom:10px;
+	}
+
+	.score-labels{
+	    display:flex;
+	    justify-content:space-between;
+	    margin-bottom:30px;
+	    color:#888;
+	    font-size:13px;
+	}
+
+        .score-buttons{
+            display:flex;
+            justify-content:space-between;
+            margin-top:30px;
+	    margin-bottom:30px;
+        }
+
+        .score-buttons button{
+	    width:60px;
+	    height:60px;
+	    border-radius:50%;
+	    border:none;
+	    cursor:pointer;
+	    background:#efefef;
+	    font-size:18px;
+	    font-weight:bold;
+	}
+
+	.score-buttons button.selected{
+	    background:#43a047;
+	    color:white;
+	}
+
+	.result-button {
+            margin-top: 25px;
+        }
+
+        .result-button button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background-color: #222222;
+            color: white;
+            cursor: pointer;
+        }
+
+        .result-button button:hover {
+            background-color: #43a047;
+        }
+
+    </style>
+</head>
+
+<script>
+
+const answers = {};
+
+function selectScore(button) {
+
+    const questionCard = button.closest('.question-card');
+
+    const buttons =
+        questionCard.querySelectorAll('.score-buttons button');
+
+    buttons.forEach(btn => {
+        btn.classList.remove('selected');
+    });
+
+    button.classList.add('selected');
+
+    const questionNumber =
+        questionCard.querySelector(
+            '.question-number'
+        ).textContent;
+
+    const score = button.textContent;
+
+    answers[questionNumber] = score;
+
+    console.log(answers);
+
+    sessionStorage.setItem(
+        "strengthAnswers",
+        JSON.stringify(answers)
+    );
+
+}
+
+</script>
+
+<body>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q1 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、新しい見方や考え方を思いつき、独自の方法で解決につなげます
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q2 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、新しいものが好きで、新しい人と出会ったり、新しい経験をしたいと思っています
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q3 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、ものごとをいろいろな側面から検討し、よく吟味した根拠をもって結論を下します
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q4 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、自分の知識や経験を深めたいと考えて、新しいことを学ぼうと熱心に努力します
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q5 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、ものごとのの流れや大筋をよくとらえていて、他の人から相談されることも多いです
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q6 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、さまざまな困難を真正面からとらえ、怖がったりしりごみしないで挑戦します
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q7 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、障害があったとしても、やり始めたことを完成するまでやり続けることができます
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q8 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、まじめで信頼されており、どんなときにも嘘をつくことはありません
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q9 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、人生と日常生活に熱心で、いつも全力でエネルギッシュに活動します
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q10 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、温かくて他の人に寄り添うことができ、他の人からも好かれています
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q11 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、他の人の面倒をみてあげて、何かしてあげたいという気持ちに満ち溢れています
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q12 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、その場の流れや人の気持ちによく気がつき、先回りして行動することができます
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q13 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、グループのメンバーと協力して、チームのために働き、積極的に責任を果たします
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q14 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、平等に機会があることが大切だと思い、みんなに同じように接します
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q15 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、誰かに従うより、自分がリ－ダーとしてみんなのために働くのが得意です
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q16 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、理不尽な扱いを受け流すことができ、他人の失敗を許すことができます
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q17 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、自分の足りないところを認め、自分よりも他の人の成功を喜ぶほうです
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q18 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、あとで後悔しないように、慎重に計画し、十分に注意深く準備します
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q19 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、とても自制心があり、自分の感情や行動をコントロールして、平静で落ち着いています
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q20 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、美しいものや素晴らしいものを見つけて、それに心打たれて感激することが多いです
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q21 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、人生の良い出来事を当たり前とは思わず、ありがたく感じその気持ちを伝えます
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q22 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、望みがかなうことを期待し、それを信じて楽しく励むことができます
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q23 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、人を笑わせるのが好きで、落ち込んだ雰囲気をなごませて楽しくすることができます
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number">
+            Q24 / 24
+        </div>
+
+        <p class="question-text">
+            わたしは、人生には大切な意味があると信じており、それに従って行動します
+        </p>
+
+	<div class="score-buttons">
+
+    	    <button onclick="selectScore(this)">1</button>
+    	    <button onclick="selectScore(this)">2</button>
+    	    <button onclick="selectScore(this)">3</button>
+    	    <button onclick="selectScore(this)">4</button>
+    	    <button onclick="selectScore(this)">5</button>
+    	    <button onclick="selectScore(this)">6</button>
+    	    <button onclick="selectScore(this)">7</button>
+
+	</div>
+
+        <div class="score-labels">
+    		<span>← 全く当てはまらない</span>
+    		<span>非常によく当てはまる →</span>
+	</div>
+
+    </div>
+
+    <div class="result-button">
+        <button onclick="location.href='result.html'">
+            診断結果を見る
+        </button>
+    </div>
+
+
+</body>
+
+</html>
