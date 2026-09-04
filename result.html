@@ -118,229 +118,319 @@
     </div>
 
 <script>
+const savedData =
+    sessionStorage.getItem("strengthAnswers");
 
-const answers =
-    JSON.parse(
-        sessionStorage.getItem(
-            "strengthAnswers"
-        )
-    );
+if (savedData === null) {
+    document.getElementById("categoryResult").innerHTML =
+        "<p>回答データが見つかりません。診断ページから回答してください。</p>";
 
-const categoryInfo = {
+    document.getElementById("top5Result").innerHTML = "";
+} else {
+    const answers =
+        JSON.parse(savedData);
 
-    "知恵": {
-        image:"images/wisdom.png",
-        color:"#FFECCD"
-    },
+    const categoryInfo = {
+        "知恵": {
+            image: "images/wisdom.png",
+            color: "#FFECCD",
+            barColor: "#FFAB24"
+        },
 
-    "勇気": {
-        image:"images/courage.png",
-        color:"#FFDFD1"
-    },
+        "勇気": {
+            image: "images/courage.png",
+            color: "#FFDFD1",
+            barColor: "#FF6A28"
+        },
 
-    "人間力": {
-        image:"images/humanity.png",
-        color:"#FFD9DC"
-    },
+        "人間力": {
+            image: "images/humanity.png",
+            color: "#FFD9DC",
+            barColor: "#FE2633"
+        },
 
-    "正義": {
-        image:"images/justice.png",
-        color:"#D1EBE4"
-    },
+        "正義": {
+            image: "images/justice.png",
+            color: "#D1EBE4",
+            barColor: "#439D86"
+        },
 
-    "節制力": {
-        image:"images/temperance.png",
-        color:"#E5F8FF"
-    },
+        "節制力": {
+            image: "images/temperance.png",
+            color: "#E5F8FF",
+            barColor: "#AFEBFF"
+        },
 
-    "超越性": {
-        image:"images/transcendence.png",
-        color:"#E0CEF2"
-    }
+        "超越性": {
+            image: "images/transcendence.png",
+            color: "#E0CEF2",
+            barColor: "#602897"
+        }
+    };
 
-};
+    const strengthInfo = {
 
-const categoryScores = {
-    "知恵": 0,
-    "勇気": 0,
-    "人間力": 0,
-    "正義": 0,
-    "節制力": 0,
-    "超越性": 0
-};
+        "創造性": {
+            description:
+                "物事を行うのに目新しく、生産性の高いやり方を考える力。芸術的な成果を含むがそれに限定されない。"
+        },
 
-const categoryMax = {
-    "知恵": 35,
-    "勇気": 28,
-    "人間力": 21,
-    "正義": 21,
-    "節制力": 28,
-    "超越性": 35
-};
+        "好奇心": {
+            description:
+                "今起きているあらゆる経験それ自体に興味を持ち、主題やテーマに対して興味深いと感じる。探求心を発揮して新しいことを発見することを好む。"
+        },
 
-Object.values(answers).forEach(answer => {
+        "知的柔軟性": {
+            description:
+                "あらゆる角度から物事を考え抜いて検討する。決して安易に結論に飛びつかない。証拠に照らして判断を変えることができる。あらゆる証拠に対して等しく重きを置く。"
+        },
 
-    categoryScores[
-        answer.category
-    ] += answer.score;
+        "向学心": {
+            description:
+                "新しいスキルや知識体系を身につけることは、独学でも正式な教育による場合でも明らかに好奇心の強みに関係しているが、好奇心の枠に留まらず、既知の知識についても体系的に理解を深める傾向がある。"
+        },
 
-});
+        "大局観": {
+            description:
+                "人に対して賢明な助言ができる。自分にとっても、また他の人にとっても納得できるような、全体を俯瞰する視点を持っている。"
+        },
 
-let html = "";
+        "勇敢さ": {
+            description:
+                "脅威や、試練や、困難や、苦痛などに決してひるまない。反対にあっても正しいことをきちんと言う。支持が得られなくても信念に基づいて行動する。身体を張るような勇敢さを含むがそれに限らない。"
+        },
 
-Object.keys(categoryScores).forEach(category => {
+        "忍耐力": {
+            description:
+                "始めたことを最後までやり遂げる。困難にあっても粘り強く前進し続ける。必ず課題を終わらせる。課題をやり遂げることに喜びを見出す。"
+        },
 
-    const score =
-        categoryScores[category];
+        "誠実さ": {
+            description:
+                "真実を語る。自分を誠実に語る。偽りなく存在する。自分の気持ちと行動に対して責任を持つ。"
+        },
 
-    const max =
-        categoryMax[category];
+        "熱意": {
+            description:
+                "感動と情熱をもって生きる。物事を中途半端にしたり、いい加減にすることはない。人生を冒険のように生きる。いきいきしており、活動的。"
+        },
 
-    const percent =
-        Math.round(
-            score / max * 100
+        "愛情": {
+            description:
+                "人との親密性、特に互いに共感し合ったり、思いやったりする関係に重きを置く。人と親しむ。"
+        },
+
+        "親切心": {
+            description:
+                "人に親切にし、人のためによいことをする。他人を助け、面倒をみてあげる。"
+        },
+
+        "社会的知性": {
+            description:
+                "他者および自分自身の動機や感情を意識している。異なる状況においても、そこでの適切な振る舞い方を知っている。他者を動かすにはどうすればよいかを知っている。"
+        },
+
+        "チームワーク": {
+            description:
+                "グループやチームの一員としてうまく立ち振る舞う。グループに忠実で、その中で自分のやるべきことを行う。"
+        },
+
+        "公平性": {
+            description:
+                "公平や正義という概念に従ってあらゆる人々を同様に扱う。自身の個人的な感情が他者への評価をゆがめることを許さない。皆に公平にチャンスを与える。"
+        },
+
+        "リーダーシップ": {
+            description:
+                "自分が属するグループが物事を達成できるように力づけると同時に、グループ内で良い人間関係が保たれるように尽力する。グループのメンバーが活動しやすいように支援し、実現できるように動く。"
+        },
+
+        "寛容さ": {
+            description:
+                "過ちを犯した人をゆるす。人にやり直すチャンスを与える。決して復讐心を持たない。"
+        },
+
+
+        "慎み深さ": {
+            description:
+                "自分の業績を自慢せず、自ずから明らかになるのに任せる。自分自身が脚光を浴びることを求めない。ありのままの自分以上に自分のことを特別だとは考えない。"
+        },
+
+        "思慮深さ": {
+            description:
+                "注意深く選択する。不必要なリスクは決してとらない。後悔するような言動はとらない。"
+        },
+
+        "自立心": {
+            description:
+                "自分の気持ちや振る舞いをコントロールする。規律正しい。自分の食欲や感情をコントロールする。"
+        },
+
+        "審美眼": {
+            description:
+                "人生のあらゆる領域、つまり自然から芸術、数学、科学、日常の経験に至るまで、そこに美や、卓越性、あるいは熟練の技を見出し、それらの真価を認める。"
+        },
+
+        "感謝": {
+            description:
+                "自分や周りに起こったよい出来事に目を向け、それに感謝する心を持つ。そして、感謝の気持ちを表す時間を持つ。"
+        },
+
+        "希望": {
+            description:
+                "素晴らしい未来を描いて、それが達成できるように努力する。良い未来がもたらされると信じる。"
+        },
+
+        "ユーモア": {
+            description:
+                "笑いやいたずらを好む。人に笑いをもたらす。明るい面を見る。ジョークを考える（必ずしも口にしなくてよい）。"
+        },
+
+        "スピリチュアリティ": {
+            description:
+                "より高次の目的や、森羅万象の意味について、一貫した信念を持つ。より大きな枠組みの中で自分がどこに適するのかを理解している。有意義な人生について信念を持っており、信念に基づき行動し、やすらぎを感じる。"
+        }
+
+    };
+
+    const categoryScores = {
+        "知恵": 0,
+        "勇気": 0,
+        "人間力": 0,
+        "正義": 0,
+        "節制力": 0,
+        "超越性": 0
+    };
+
+    const categoryMax = {
+        "知恵": 35,
+        "勇気": 28,
+        "人間力": 21,
+        "正義": 21,
+        "節制力": 28,
+        "超越性": 35
+    };
+
+    Object.values(answers).forEach(answer => {
+        categoryScores[answer.category] += answer.score;
+    });
+
+    const categoryPercent = {};
+
+    Object.keys(categoryScores).forEach(category => {
+        categoryPercent[category] =
+            categoryScores[category]
+            /
+            categoryMax[category]
+            *
+            100;
+    });
+
+    let categoryHtml = "";
+
+    Object.keys(categoryScores).forEach(category => {
+        const percent =
+            Math.round(categoryPercent[category]);
+
+        categoryHtml += `
+            <div class="category-block">
+
+                <div class="category-header">
+                    <span>${category}</span>
+                    <span>${percent}%</span>
+                </div>
+
+                <div class="bar-bg">
+                    <div
+                        class="bar-fill"
+                        style="
+                            width: ${percent}%;
+                            background-color:
+                            ${categoryInfo[category].barColor};
+                        "
+                    ></div>
+                </div>
+
+            </div>
+        `;
+    });
+
+    document.getElementById(
+        "categoryResult"
+    ).innerHTML = categoryHtml;
+
+    const strengthRanking =
+        Object.values(answers);
+
+    strengthRanking.sort((a, b) => {
+        if (a.score !== b.score) {
+            return b.score - a.score;
+        }
+
+        if (
+            categoryPercent[a.category]
+            !==
+            categoryPercent[b.category]
+        ) {
+            return (
+                categoryPercent[b.category]
+                -
+                categoryPercent[a.category]
+            );
+        }
+
+        return a.strength.localeCompare(
+            b.strength,
+            "ja"
         );
+    });
 
-    const categoryColors = {
-    "知恵": "#FFAB24",
-    "勇気": "#FF6A28",
-    "人間力": "#FE2633",
-    "正義": "#439D86",
-    "節制力": "#AFEBFF",
-    "超越性": "#602897"
-};
+const top5 =
+    strengthRanking.slice(0, 5);
 
+let top5Html = "";
 
-    html += `
-    <div class="category-block">
+top5.forEach((item, index) => {
 
-        <div class="category-header">
-            <span>${category}</span>
-            <span>${percent}%</span>
+    top5Html += `
+
+        <div
+            class="strength-card"
+            style="
+                background-color:
+                ${categoryInfo[item.category].color};
+            "
+        >
+
+            <img
+    class="strength-image"
+    src="${categoryInfo[item.category].image}"
+    alt="${item.category}"
+>
+
+            <div class="strength-text">
+
+                <div class="strength-name">
+                    ${index + 1}位 ${item.strength}
+                </div>
+
+                <div class="strength-description">
+                    ${strengthInfo[item.strength].description}
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="bar-bg">
-            <div
-                class="bar-fill"
-                style="
-                    width:${percent}%;
-                    background:${categoryColors[category]};
-                "
-            ></div>
-        </div>
-
-    </div>
-`;
+    `;
 
 });
-
-document.getElementById(
-    "categoryResult"
-).innerHTML = html;
-
-const categoryPercent = {};
-
-Object.keys(categoryScores).forEach(category => {
-
-    categoryPercent[category] =
-        categoryScores[category]
-        /
-        categoryMax[category]
-        * 100;
-
-});
-
-const strengthRanking =
-    Object.values(answers);
-
-strengthRanking.sort((a, b) => {
-
-    if (a.score !== b.score) {
-
-        return b.score - a.score;
-
-    }
-
-    return (
-        categoryPercent[b.category]
-        -
-        categoryPercent[a.category]
-    );
-
-});
-
-const categoryPercent = {};
-
-Object.keys(categoryScores).forEach(category => {
-
-    categoryPercent[category] =
-        categoryScores[category]
-        /
-        categoryMax[category]
-        * 100;
-
-});
-
-const strengthRanking =
-    Object.values(answers);
-
-strengthRanking.sort((a, b) => {
-
-    // まず点数順
-
-    if(a.score !== b.score){
-
-        return b.score - a.score;
-
-    }
-
-    // 同点ならカテゴリ％
-
-    return (
-        categoryPercent[b.category]
-        -
-        categoryPercent[a.category]
-    );
-
-});
-
-console.log(
-    strengthRanking.slice(0,5)
-);
-
-const top1 =
-    strengthRanking[0];
 
 document.getElementById(
     "top5Result"
-).innerHTML = `
-
-    <h3>1位</h3>
-
-    <div
-        class="strength-card"
-        style="
-            background:
-            ${categoryInfo[top1.category].color};
-        "
-    >
-
-        <img
-            src="${categoryInfo[top1.category].image}"      <div class="strength-name">
-                ${top1.strength}
-            </div>
-
-            <div class="strength-description">
-                ここに説明文
-            </div>
-
-        </div>
-
-    </div>
-
-`;
-
-
+).innerHTML =
+    top5Html;
+}
 </script>
 
 
