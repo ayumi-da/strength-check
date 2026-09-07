@@ -100,270 +100,229 @@
 
     </div>
 
-<script>
-
-const savedData =
-    sessionStorage.getItem("strengthAnswers");
-
-if (savedData === null) {
-
-    document.getElementById("categoryResult").innerHTML =
-        "<p>回答データが見つかりません。診断ページから回答してください。</p>";
-
-    document.getElementById("top5Result").innerHTML = "";
-
-} else {
-
-    const answers = JSON.parse(savedData);
-
-    Promise.all([
-        fetch("data/strength.csv")
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("strength.csvを読み込めませんでした");
-                }
-
-                return response.text();
-            }),
-
-        fetch("data/category.csv")
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("category.csvを読み込めませんでした");
-                }
-
-                return response.text();
-            })
-    ])
-    .then(([strengthData, categoryData]) => {
-
-        const categoryInfo = {};
-        const strengthInfo = {};
-        const categoryScores = {};
-        const categoryMax = {};
-
-        /*
-         * category.csvから
-         * categoryInfoとcategoryScoresを作る
-         */
-        const categoryLines =
-            categoryData
-                .replace(/^\uFEFF/, "")
-                .trim()
-                .split(/\r?\n/);
-
-        categoryLines.slice(1).forEach(line => {
-
-            const [
-                category,
-                image,
-                color,
-                barColor,
-                text
-            ] = line.split(",");
-
-            categoryInfo[category] = {
-                image: image,
-                color: color,
-                barColor: barColor,
-                text: text
-            };
-
-            categoryScores[category] = 0;
-            categoryMax[category] = 0;
-
-        });
-
-        /*
-         * strength.csvから
-         * strengthInfoとcategoryMaxを作る
-         */
-        const strengthLines =
-            strengthData
-                .replace(/^\uFEFF/, "")
-                .trim()
-                .split(/\r?\n/);
-
-        strengthLines.slice(1).forEach(line => {
-
-            const [
-                strength,
-                category,
-                text,
-                description
-            ] = line.split(",");
-
-            strengthInfo[strength] = {
-                category: category,
-                text: text,
-                description: description
-            };
-
-            /*
-             * 1問につき7点満点なので、
-             * カテゴリごとに7点を加算する
-             */
-            if (categoryMax[category] !== undefined) {
-                categoryMax[category] += 7;
-            }
-
-        });
-
-        /*
-         * 回答結果をカテゴリ別に合計する
-         */
-        Object.values(answers).forEach(answer => {
-
-            if (categoryScores[answer.category] !== undefined) {
-                categoryScores[answer.category] += answer.score;
-            }
-
-        });
-
-        /*
-         * カテゴリ別の割合を計算する
-         */
-        const categoryPercent = {};
-
-        Object.keys(categoryScores).forEach(category => {
-
-            const maxScore = categoryMax[category];
-
-            if (maxScore === 0) {
-                categoryPercent[category] = 0;
-            } else {
-                categoryPercent[category] =
-                    categoryScores[category] / maxScore * 100;
-            }
-
-        });
-
-        /*
-         * カテゴリ別結果を表示する
-         */
-        let categoryHtml = "";
-
-        Object.keys(categoryInfo).forEach(category => {
-
-            const percent =
-                Math.round(categoryPercent[category]);
-
-            categoryHtml += `
-                <div class="category-block">
-
-                    <div class="category-header">
-                        <span>${category}</span>
-                        <span>${percent}%</span>
-                    </div>
+    <script>
+
+        const savedData = sessionStorage.getItem("strengthAnswers");
 
-                    <div class="bar-bg">
-                        <div
-                            class="bar-fill"
-                            style="
-                                width: ${percent}%;
-                                background-color:
-                                ${categoryInfo[category].barColor};
-                            "
-                        ></div>
-                    </div>
+        if (savedData === null) {
 
-                </div>
-            `;
+            document.getElementById("categoryResult").innerHTML = "<p>回答データが見つかりません。診断ページから回答してください。</p>";
+            document.getElementById("top5Result").innerHTML = "";
 
-        });
+        } else {
 
-        document.getElementById("categoryResult").innerHTML =
-            categoryHtml;
+            const answers = JSON.parse(savedData);
 
-        /*
-         * 強みを点数順に並べる
-         */
-        const strengthRanking =
-            Object.values(answers);
+            Promise.all([
+                fetch("data/strength.csv")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("strength.csvを読み込めませんでした");
+                    }
 
-        strengthRanking.sort((a, b) => {
+                    return response.text();
+                }),
 
-            if (a.score !== b.score) {
-                return b.score - a.score;
-            }
+                fetch("data/category.csv")
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("category.csvを読み込めませんでした");
+                        }
 
-            if (
-                categoryPercent[a.category] !==
-                categoryPercent[b.category]
-            ) {
-                return (
-                    categoryPercent[b.category] -
-                    categoryPercent[a.category]
-                );
-            }
+                        return response.text();
+                    })
+            ])
+                .then(([strengthData, categoryData]) => {
 
-            return a.strength.localeCompare(
-                b.strength,
-                "ja"
-            );
+                    const categoryInfo = {};
+                    const strengthInfo = {};
+                    const categoryScores = {};
+                    const categoryMax = {};
 
-        });
+                    const categoryLines =
+                        categoryData
+                            .replace(/^\uFEFF/, "")
+                            .trim()
+                            .split(/\r?\n/);
 
-        /*
-         * TOP5を表示する
-         */
-        const top5 =
-            strengthRanking.slice(0, 5);
+                    categoryLines.slice(1).forEach(line => {
 
-        let top5Html = "";
+                        const [
+                            category,
+                            image,
+                            color,
+                            barColor,
+                            text
+                        ] = line.split(",");
 
-        top5.forEach((item, index) => {
+                        categoryInfo[category] = {
+                            image: image,
+                            color: color,
+                            barColor: barColor,
+                            text: text
+                        };
 
-            top5Html += `
-                <div
-                    class="strength-card"
-                    style="
-                        background-color:
-                        ${categoryInfo[item.category].color};
-                    "
-                >
+                        categoryScores[category] = 0;
+                        categoryMax[category] = 0;
 
-                    <img
-                        class="strength-image"
-                        src="${categoryInfo[item.category].image}"
-                        alt="${item.category}"
-                    >
+                    });
 
-                    <div class="strength-text">
+                    const strengthLines =
+                        strengthData
+                            .replace(/^\uFEFF/, "")
+                            .trim()
+                            .split(/\r?\n/);
 
-                        <div class="strength-name">
-                            ${index + 1}位 ${item.strength}
-                        </div>
+                    strengthLines.slice(1).forEach(line => {
 
-                        <div class="strength-description">
-                            ${strengthInfo[item.strength].description}
-                        </div>
+                        const [
+                            strength,
+                            category,
+                            text,
+                            description
+                        ] = line.split(",");
 
-                    </div>
+                        strengthInfo[strength] = {
+                            category: category,
+                            text: text,
+                            description: description
+                        };
 
-                </div>
-            `;
+                        if (categoryMax[category] !== undefined) {
+                            categoryMax[category] += 7;
+                        }
 
-        });
+                    });
 
-        document.getElementById("top5Result").innerHTML =
-            top5Html;
+                    Object.values(answers).forEach(answer => {
 
-    })
-    .catch(error => {
+                        if (categoryScores[answer.category] !== undefined) {
+                            categoryScores[answer.category] += answer.score;
+                        }
 
-        console.error(error);
+                    });
 
-        document.getElementById("categoryResult").innerHTML =
-            "<p>診断データの読み込みに失敗しました。</p>";
+                    const categoryPercent = {};
 
-        document.getElementById("top5Result").innerHTML = "";
+                    Object.keys(categoryScores).forEach(category => {
 
-    });
+                        const maxScore = categoryMax[category];
 
-}
+                        if (maxScore === 0) {
+                            categoryPercent[category] = 0;
+                        } else {
+                            categoryPercent[category] = categoryScores[category] / maxScore * 100;
+                        }
 
-</script>
+                    });
+
+                    let categoryHtml = "";
+
+                    Object.keys(categoryInfo).forEach(category => {
+
+                        const percent = Math.round(categoryPercent[category]);
+
+                        categoryHtml += `
+                            <div class="category-block">
+
+                                <div class="category-header">
+                                    <span>${category}</span>
+                                    <span>${percent}%</span>
+                                </div>
+
+                                <div class="bar-bg">
+                                    <div
+                                        class="bar-fill"
+                                        style="
+                                            width: ${percent}%;
+                                            background-color:
+                                            ${categoryInfo[category].barColor};
+                                        "
+                                    ></div>
+                                </div>
+
+                            </div>
+                        `;
+
+                    });
+
+                    document.getElementById("categoryResult").innerHTML =
+                    categoryHtml;
+
+                    const strengthRanking = Object.values(answers);
+
+                    strengthRanking.sort((a, b) => {
+
+                        if (a.score !== b.score) {
+                            return b.score - a.score;
+                        }
+
+                        if (
+                            categoryPercent[a.category] !==
+                            categoryPercent[b.category]
+                        ) {
+                            return (
+                                categoryPercent[b.category] -
+                                categoryPercent[a.category]
+                            );
+                        }
+
+                        return a.strength.localeCompare(b.strength, "ja");
+
+                    });
+
+                    const top5 = strengthRanking.slice(0, 5);
+
+                    let top5Html = "";
+
+                    top5.forEach((item, index) => {
+
+                        top5Html += `
+                            <div
+                                class="strength-card"
+                                style="
+                                    background-color:
+                                    ${categoryInfo[item.category].color};"
+                            >
+
+                                <img
+                                    class="strength-image"
+                                    src="${categoryInfo[item.category].image}"
+                                    alt="${item.category}"
+                                >
+
+                                <div class="strength-text">
+
+                                    <div class="strength-name">
+                                        ${index + 1}位 ${item.strength}
+                                    </div>
+
+                                    <div class="strength-description">
+                                        ${strengthInfo[item.strength].description}
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        `;
+
+                    });
+
+                    document.getElementById("top5Result").innerHTML = top5Html;
+
+                })
+                .catch(error => {
+
+                    console.error(error);
+
+                    document.getElementById("categoryResult").innerHTML = "<p>診断データの読み込みに失敗しました。</p>";
+                    document.getElementById("top5Result").innerHTML = "";
+
+                });
+
+        }
+
+    </script>
 </body>
 
 </html>

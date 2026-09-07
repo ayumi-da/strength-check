@@ -118,55 +118,52 @@
         </div>
 
     </div>
-<script>
 
-fetch("data/category.csv")
-    .then(response => response.text())
-    .then(data => {
+    <script>
+        fetch("data/category.csv")
+            .then(response => response.text())
+            .then(data => {
 
-        const lines = data.trim().split(/\r?\n/);
+                const lines = data.trim().split(/\r?\n/);
+                lines.slice(1).forEach(line => {
 
-        lines.slice(1).forEach(line => {
+                    const [
+                        category,
+                        image,
+                        color,
+                        barColor,
+                        text
+                    ] = line.split(",");
 
-            const [
-                category,
-                image,
-                color,
-                barColor,
-                text
-            ] = line.split(",");
+                    document.getElementById("categoryGrid").innerHTML += `
+                        <div
+                            class="image-card"
+                            style="background-color: ${color};"
+                        >
 
-            document.getElementById("categoryGrid").innerHTML += `
-                <div
-                    class="image-card"
-                    style="background-color: ${color};"
-                >
+                            <img
+                                src="${image}"
+                                alt="${category}"
+                            >
 
-                    <img
-                        src="${image}"
-                        alt="${category}"
-                    >
+                            <div class="category-text">
 
-                    <div class="category-text">
+                                <h3>
+                                    ${category}
+                                </h3>
 
-                        <h3>
-                            ${category}
-                        </h3>
+                                <p>
+                                    ${text}
+                                </p>
 
-                        <p>
-                            ${text}
-                        </p>
+                            </div>
 
-                    </div>
+                        </div>
+                    `;
+        	});
+    	    });
 
-                </div>
-            `;
-
-        });
-
-    });
-
-</script>
+    </script>
 
 </body>
 
