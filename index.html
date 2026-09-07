@@ -124,63 +124,10 @@
             </p>
         </div>
 
-        <div class="image-grid">
-
-            <div class="image-card wisdom-card">
-                <img src="images/wisdom.png"
-		     alt="知恵">
-		<div class="category-text">
-			<h3>知恵</h3>
-			<p>知的な動きが大きな役割を持つ強み</p>
-		</div>
-            </div>
-
-            <div class="image-card courage-card">
-                <img src="images/courage.png"
-		     alt="勇気">
-		<div class="category-text">
-			<h3>勇気</h3>
-			<p>ゴール実現の障害に対する情的な強み</p>
-		</div>
-            </div>
-
-            <div class="image-card humanity-card">
-                <img src="images/humanity.png"
-		     alt="人間力">
-		<div class="category-text">
-			<h3>人間力</h3>
-			<p>個人から生み出され発揮される強み</p>
-		</div>
-            </div>
-
-            <div class="image-card justice-card">
-                <img src="images/justice.png"
-		     alt="正義">
-		<div class="category-text">
-			<h3>正義</h3>
-			<p>他者を助け、面倒を見る対人関係の強み</p>
-		</div>
-            </div>
-
-            <div class="image-card temperance-card">
-                <img src="images/temperance.png"
-		     alt="節制力">
-		<div class="category-text">
-			<h3>節制力</h3>
-			<p>自己に対する適切な抑制の強み</p>
-		</div>
-            </div>
-
-            <div class="image-card transcendence-card">
-                <img src="images/transcendence.png"
-		     alt="超越性">
-		<div class="category-text">
-			<h3>超越性</h3>
-			<p>森羅万象とのつながりや意義を見出す強み</p>
-		</div>
-            </div>
-
-        </div>
+        <div
+            class="image-grid"
+            id="categoryGrid"
+        ></div>
 
         <div class="start-button">
             <button onclick="location.href='question.html'">
@@ -189,6 +136,19 @@
         </div>
 
     </div>
+<script>
+
+fetch("category.csv")
+    .then(response => response.text())
+    .then(data => {
+
+        const lines = data.trim().split("\n");
+
+        console.log(lines);
+
+    });
+
+</script>
 
 </body>
 
