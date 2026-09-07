@@ -107,6 +107,17 @@
     <script>
         const savedData = sessionStorage.getItem("strengthAnswers");
 
+Promise.all([
+    fetch("data/strength.csv").then(r => r.text()),
+    fetch("data/category.csv").then(r => r.text())
+])
+.then(([strengthData, categoryData]) => {
+
+    console.log("strength loaded");
+    console.log("category loaded");
+
+});
+
         if (savedData === null) {
 fetch("data/category.csv")
     .then(response => response.text())
@@ -134,6 +145,7 @@ fetch("data/category.csv")
             };
 
         });
+window.csvCategoryInfo = csvCategoryInfo;
 
         console.log(csvCategoryInfo);
 
@@ -321,7 +333,7 @@ fetch("data/strength.csv")
                                 style="
                                     width: ${percent}%;
                                     background-color:
-                                    ${categoryInfo[category].barColor};"
+                                    ${csvCategoryInfo[category].barColor};"
                             ></div>
                         </div>
 
