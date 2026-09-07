@@ -94,871 +94,11 @@
     </style>
 </head>
 
-<script>
-
-    const answers = {};
-
-    function selectScore(button) {
-
-        const questionCard =
-            button.closest(".question-card");
-
-        const buttons =
-            questionCard.querySelectorAll(
-                ".score-buttons button"
-            );
-
-        buttons.forEach(btn => {
-            btn.classList.remove("selected");
-        });
-
-        button.classList.add("selected");
-
-        const strength =
-            questionCard.dataset.strength;
-
-        const category =
-            questionCard.dataset.category;
-
-        const score =
-            Number(button.textContent.trim());
-
-        answers[strength] = {
-            strength: strength,
-            category: category,
-            score: score
-        };
-
-        sessionStorage.setItem(
-            "strengthAnswers",
-            JSON.stringify(answers)
-        );
-	updateProgress();
-    }
-
-    function updateProgress(){
-
-        const answeredCount =
-            Object.keys(answers).length;
-
-        const resultBtn =
-            document.getElementById("resultBtn");
-
-        if(answeredCount < 24){
-
-            resultBtn.textContent =
-                `${answeredCount} / 24`;
-
-            resultBtn.disabled = true;
-
-        }else{
-
-            resultBtn.textContent =
-                "診断結果を見る";
-
-            resultBtn.disabled = false;
-
-        }
-
-    }
-
-</script>
-
 <body>
 
-    <div
-	class="question-card"
-    	data-strength="創造性"
-    	data-category="知恵"
-    >
+    <div id="questionArea"></div>
 
-
-        <div class="question-number">
-            Q1 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、新しい見方や考え方を思いつき、独自の方法で解決につなげます
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="好奇心"
-    	data-category="知恵"
-    >
-
-        <div class="question-number">
-            Q2 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、新しいものが好きで、新しい人と出会ったり、新しい経験をしたいと思っています
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="知的柔軟性"
-    	data-category="知恵"
-    >
-
-        <div class="question-number">
-            Q3 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、ものごとをいろいろな側面から検討し、よく吟味した根拠をもって結論を下します
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="向学心"
-    	data-category="知恵"
-    >
-
-        <div class="question-number">
-            Q4 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、自分の知識や経験を深めたいと考えて、新しいことを学ぼうと熱心に努力します
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="大局観"
-    	data-category="知恵"
-    >
-
-        <div class="question-number">
-            Q5 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、ものごとのの流れや大筋をよくとらえていて、他の人から相談されることも多いです
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="勇敢さ"
-    	data-category="勇気"
-    >
-
-        <div class="question-number">
-            Q6 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、さまざまな困難を真正面からとらえ、怖がったりしりごみしないで挑戦します
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="忍耐力"
-    	data-category="勇気"
-    >
-
-        <div class="question-number">
-            Q7 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、障害があったとしても、やり始めたことを完成するまでやり続けることができます
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="誠実さ"
-    	data-category="勇気"
-    >
-
-        <div class="question-number">
-            Q8 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、まじめで信頼されており、どんなときにも嘘をつくことはありません
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="熱意"
-    	data-category="勇気"
-    >
-
-        <div class="question-number">
-            Q9 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、人生と日常生活に熱心で、いつも全力でエネルギッシュに活動します
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="愛情"
-    	data-category="人間力"
-    >
-
-        <div class="question-number">
-            Q10 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、温かくて他の人に寄り添うことができ、他の人からも好かれています
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="親切心"
-    	data-category="人間力"
-    >
-
-        <div class="question-number">
-            Q11 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、他の人の面倒をみてあげて、何かしてあげたいという気持ちに満ち溢れています
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="社会的知性"
-    	data-category="人間力"
-    >
-
-        <div class="question-number">
-            Q12 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、その場の流れや人の気持ちによく気がつき、先回りして行動することができます
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="チームワーク"
-    	data-category="正義"
-    >
-
-        <div class="question-number">
-            Q13 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、グループのメンバーと協力して、チームのために働き、積極的に責任を果たします
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="公平性"
-    	data-category="正義"
-    >
-
-        <div class="question-number">
-            Q14 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、平等に機会があることが大切だと思い、みんなに同じように接します
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="リーダーシップ"
-    	data-category="正義"
-    >
-
-        <div class="question-number">
-            Q15 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、誰かに従うより、自分がリ－ダーとしてみんなのために働くのが得意です
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="寛容さ"
-    	data-category="節制力"
-    >
-
-        <div class="question-number">
-            Q16 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、理不尽な扱いを受け流すことができ、他人の失敗を許すことができます
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="慎み深さ"
-    	data-category="節制力"
-    >
-
-        <div class="question-number">
-            Q17 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、自分の足りないところを認め、自分よりも他の人の成功を喜ぶほうです
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="思慮深さ"
-    	data-category="節制力"
-    >
-
-        <div class="question-number">
-            Q18 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、あとで後悔しないように、慎重に計画し、十分に注意深く準備します
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="自立心"
-    	data-category="節制力"
-    >
-
-        <div class="question-number">
-            Q19 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、とても自制心があり、自分の感情や行動をコントロールして、平静で落ち着いています
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="審美眼"
-    	data-category="超越性"
-    >
-
-        <div class="question-number">
-            Q20 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、美しいものや素晴らしいものを見つけて、それに心打たれて感激することが多いです
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="感謝"
-    	data-category="超越性"
-    >
-
-        <div class="question-number">
-            Q21 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、人生の良い出来事を当たり前とは思わず、ありがたく感じその気持ちを伝えます
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="希望"
-    	data-category="超越性"
-    >
-
-        <div class="question-number">
-            Q22 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、望みがかなうことを期待し、それを信じて楽しく励むことができます
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="ユーモア"
-    	data-category="超越性"
-    >
-
-        <div class="question-number">
-            Q23 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、人を笑わせるのが好きで、落ち込んだ雰囲気をなごませて楽しくすることができます
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
-    <div
-	class="question-card"
-    	data-strength="スピリチュアリティ"
-    	data-category="超越性"
-    >
-
-        <div class="question-number">
-            Q24 / 24
-        </div>
-
-        <p class="question-text">
-            わたしは、人生には大切な意味があると信じており、それに従って行動します
-        </p>
-
-	<div class="score-buttons">
-
-    	    <button onclick="selectScore(this)">1</button>
-    	    <button onclick="selectScore(this)">2</button>
-    	    <button onclick="selectScore(this)">3</button>
-    	    <button onclick="selectScore(this)">4</button>
-    	    <button onclick="selectScore(this)">5</button>
-    	    <button onclick="selectScore(this)">6</button>
-    	    <button onclick="selectScore(this)">7</button>
-
-	</div>
-
-        <div class="score-labels">
-    		<span>← 全く当てはまらない</span>
-    		<span>非常によく当てはまる →</span>
-	</div>
-
-    </div>
-
+    
     <div class="result-button">
         <button
             id="resultBtn"
@@ -968,6 +108,232 @@
             0 / 24
         </button>
     </div>
+
+<script>
+
+    const questionInfo = [
+        {
+            strength: "創造性",
+            category: "知恵",
+            text: "わたしは、新しい見方や考え方を思いつき、独自の方法で解決につなげます"
+        },
+        {
+            strength: "好奇心",
+            category: "知恵",
+            text: "わたしは、新しいものが好きで、新しい人と出会ったり、新しい経験をしたいと思っています"
+        },
+        {
+            strength: "知的柔軟性",
+            category: "知恵",
+            text: "わたしは、ものごとをいろいろな側面から検討し、よく吟味した根拠をもって結論を下します"
+        },
+        {
+            strength: "向学心",
+            category: "知恵",
+            text: "わたしは、自分の知識や経験を深めたいと考えて、新しいことを学ぼうと熱心に努力します"
+        },
+        {
+            strength: "大局観",
+            category: "知恵",
+            text: "わたしは、ものごとのの流れや大筋をよくとらえていて、他の人から相談されることも多いです"
+        },
+        {
+            strength: "勇敢さ",
+            category: "勇気",
+            text: "わたしは、さまざまな困難を真正面からとらえ、怖がったりしりごみしないで挑戦します"
+        },
+        {
+            strength: "忍耐力",
+            category: "勇気",
+            text: "わたしは、障害があったとしても、やり始めたことを完成するまでやり続けることができます"
+        },
+        {
+            strength: "誠実さ",
+            category: "勇気",
+            text: "わたしは、まじめで信頼されており、どんなときにも嘘をつくことはありません"
+        },
+        {
+            strength: "熱意",
+            category: "勇気",
+            text: "わたしは、人生と日常生活に熱心で、いつも全力でエネルギッシュに活動します"
+        },
+        {
+            strength: "愛情",
+            category: "人間力",
+            text: "わたしは、温かくて他の人に寄り添うことができ、他の人からも好かれています"
+        },
+        {
+            strength: "親切心",
+            category: "人間力",
+            text: "わたしは、他の人の面倒をみてあげて、何かしてあげたいという気持ちに満ち溢れています"
+        },
+        {
+            strength: "社会的知性",
+            category: "人間力",
+            text: "わたしは、その場の流れや人の気持ちによく気がつき、先回りして行動することができます"
+        },
+        {
+            strength: "チームワーク",
+            category: "正義",
+            text: "わたしは、グループのメンバーと協力して、チームのために働き、積極的に責任を果たします"
+        },
+        {
+            strength: "公平性",
+            category: "正義",
+            text: "わたしは、平等に機会があることが大切だと思い、みんなに同じように接します"
+        },
+        {
+            strength: "リーダーシップ",
+            category: "正義",
+            text: "わたしは、誰かに従うより、自分がリ－ダーとしてみんなのために働くのが得意です"
+        },
+        {
+            strength: "寛容さ",
+            category: "節制力",
+            text: "わたしは、理不尽な扱いを受け流すことができ、他人の失敗を許すことができます"
+        },
+        {
+            strength: "慎み深さ",
+            category: "節制力",
+            text: "わたしは、自分の足りないところを認め、自分よりも他の人の成功を喜ぶほうです"
+        },
+        {
+            strength: "思慮深さ",
+            category: "節制力",
+            text: "わたしは、あとで後悔しないように、慎重に計画し、十分に注意深く準備します"
+        },
+        {
+            strength: "自立心",
+            category: "節制力",
+            text: "わたしは、とても自制心があり、自分の感情や行動をコントロールして、平静で落ち着いています"
+        },
+        {
+            strength: "審美眼",
+            category: "超越性",
+            text: "わたしは、美しいものや素晴らしいものを見つけて、それに心打たれて感激することが多いです"
+        },
+        {
+            strength: "感謝",
+            category: "超越性",
+            text: "わたしは、人生の良い出来事を当たり前とは思わず、ありがたく感じその気持ちを伝えます"
+        },
+        {
+            strength: "希望",
+            category: "超越性",
+            text: "わたしは、望みがかなうことを期待し、それを信じて楽しく励むことができます"
+        },
+        {
+            strength: "ユーモア",
+            category: "超越性",
+            text: "わたしは、人を笑わせるのが好きで、落ち込んだ雰囲気をなごませて楽しくすることができます"
+        },
+        {
+            strength: "スピリチュアリティ",
+            category: "超越性",
+            text: "わたしは、人生には大切な意味があると信じており、それに従って行動します"
+        }
+    ];
+
+    const answers = {};
+
+    function selectScore(button) {
+
+        const questionCard = button.closest(".question-card");
+
+        const buttons = questionCard.querySelectorAll(".score-buttons button");
+
+        buttons.forEach(btn => {
+            btn.classList.remove("selected");
+        });
+
+        button.classList.add("selected");
+
+        const strength = questionCard.dataset.strength;
+
+        const category = questionCard.dataset.category;
+
+        const score = Number(button.textContent.trim());
+
+        answers[strength] = {
+            strength: strength,
+            category: category,
+            score: score
+        };
+
+        sessionStorage.setItem("strengthAnswers", JSON.stringify(answers));
+	updateProgress();
+    }
+
+    function updateProgress(){
+
+        const answeredCount = Object.keys(answers).length;
+
+        const resultBtn = document.getElementById("resultBtn");
+
+        if(answeredCount < 24){
+
+            resultBtn.textContent = `${answeredCount} / 24`;
+            resultBtn.disabled = true;
+
+        }else{
+
+            resultBtn.textContent = "診断結果を見る";
+            resultBtn.disabled = false;
+
+        }
+
+    }
+
+    let html = "";
+
+questionInfo.forEach((q, index) => {
+    html += `
+    <div
+        class="question-card"
+        data-strength="${q.strength}"
+        data-category="${q.category}"
+    >
+
+        <div class="question-number">
+            Q${index + 1} / ${questionInfo.length}
+        </div>
+
+        <p class="question-text">
+            ${q.text}
+        </p>
+
+        <div class="score-buttons">
+            <button onclick="selectScore(this)">1</button>
+            <button onclick="selectScore(this)">2</button>
+            <button onclick="selectScore(this)">3</button>
+            <button onclick="selectScore(this)">4</button>
+            <button onclick="selectScore(this)">5</button>
+            <button onclick="selectScore(this)">6</button>
+            <button onclick="selectScore(this)">7</button>
+        </div>
+
+        <div class="score-labels">
+            <span>← 全く当てはまらない</span>
+            <span>非常によく当てはまる →</span>
+        </div>
+
+    </div>
+`;
+});
+
+document.getElementById("questionArea").innerHTML = html;
+
+fetch("data/strength.csv")
+    .then(response =&gt; response.text())
+    .then(data =&gt; {
+
+        const lines = data.trim().split(/\r?\n/);
+
+        console.log(lines);
+
+    });
+
+</script>
 
 
 </body>
