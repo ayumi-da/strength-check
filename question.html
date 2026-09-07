@@ -105,13 +105,14 @@
             onclick="location.href='result.html'"
             disabled
         >
-            0 / 24
         </button>
     </div>
 
 <script>
 
     const answers = {};
+
+    let totalQuestions = 0;
 
     function selectScore(button) {
 
@@ -138,28 +139,32 @@
         };
 
         sessionStorage.setItem("strengthAnswers", JSON.stringify(answers));
-	updateProgress();
+	updateProgress(totalQuestions);
     }
 
-    function updateProgress(){
+    function updateProgress(totalQuestions) {
 
-        const answeredCount = Object.keys(answers).length;
+    const answeredCount = Object.keys(answers).length;
 
-        const resultBtn = document.getElementById("resultBtn");
+    const resultBtn =
+        document.getElementById("resultBtn");
 
-        if(answeredCount < 24){
+    if (answeredCount &lt; totalQuestions) {
 
-            resultBtn.textContent = `${answeredCount} / 24`;
-            resultBtn.disabled = true;
+        resultBtn.textContent =
+            `${answeredCount} / ${totalQuestions}`;
 
-        }else{
+        resultBtn.disabled = true;
 
-            resultBtn.textContent = "診断結果を見る";
-            resultBtn.disabled = false;
+    } else {
 
-        }
+        resultBtn.textContent =
+            "診断結果を見る";
+
+        resultBtn.disabled = false;
 
     }
+}
 
 fetch("data/strength.csv")
     .then(response => response.text())
@@ -185,6 +190,8 @@ fetch("data/strength.csv")
             });
 
         });
+
+	totalQuestions = csvQuestionInfo.length;
 
         let html = "";
 
@@ -226,6 +233,7 @@ csvQuestionInfo.forEach((q, index) => {
 });
 
 document.getElementById("questionArea").innerHTML = html;
+updateProgress(totalQuestions);
 
     });
 
