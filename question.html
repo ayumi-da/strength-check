@@ -324,12 +324,31 @@ questionInfo.forEach((q, index) => {
 document.getElementById("questionArea").innerHTML = html;
 
 fetch("data/strength.csv")
-    .then(response =&gt; response.text())
-    .then(data =&gt; {
+    .then(response => response.text())
+    .then(data => {
 
         const lines = data.trim().split(/\r?\n/);
 
-        console.log(lines);
+        const csvQuestionInfo = [];
+
+        lines.slice(1).forEach(line => {
+
+            const [
+                strength,
+                category,
+                text,
+                description
+            ] = line.split(",");
+
+            csvQuestionInfo.push({
+                strength: strength,
+                category: category,
+                text: text
+            });
+
+        });
+
+        console.log(csvQuestionInfo);
 
     });
 
