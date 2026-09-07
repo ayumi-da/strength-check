@@ -119,6 +119,10 @@ Promise.all([
 });
 
         if (savedData === null) {
+            document.getElementById("categoryResult").innerHTML = "<p>回答データが見つかりません。診断ページから回答してください。</p>";
+            document.getElementById("top5Result").innerHTML = "";
+	} else {
+
 fetch("data/category.csv")
     .then(response => response.text())
     .then(data => {
@@ -150,9 +154,6 @@ window.csvCategoryInfo = csvCategoryInfo;
         console.log(csvCategoryInfo);
 
     });
-            document.getElementById("categoryResult").innerHTML = "<p>回答データが見つかりません。診断ページから回答してください。</p>";
-            document.getElementById("top5Result").innerHTML = "";
-	} else {
             const answers = JSON.parse(savedData);
 
 	    const categoryInfo = {
