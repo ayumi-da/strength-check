@@ -348,7 +348,46 @@ fetch("data/strength.csv")
 
         });
 
-        console.log(csvQuestionInfo);
+        let html = "";
+
+csvQuestionInfo.forEach((q, index) => {
+
+    html += `
+        <div
+            class="question-card"
+            data-strength="${q.strength}"
+            data-category="${q.category}"
+        >
+
+            <div class="question-number">
+                Q${index + 1} / ${csvQuestionInfo.length}
+            </div>
+
+            <p class="question-text">
+                ${q.text}
+            </p>
+
+            <div class="score-buttons">
+                <button onclick="selectScore(this)">1</button>
+                <button onclick="selectScore(this)">2</button>
+                <button onclick="selectScore(this)">3</button>
+                <button onclick="selectScore(this)">4</button>
+                <button onclick="selectScore(this)">5</button>
+                <button onclick="selectScore(this)">6</button>
+                <button onclick="selectScore(this)">7</button>
+            </div>
+
+            <div class="score-labels">
+                <span>← 全く当てはまらない</span>
+                <span>非常によく当てはまる →</span>
+            </div>
+
+        </div>
+    `;
+
+});
+
+document.getElementById("questionArea").innerHTML = html;
 
     });
 
