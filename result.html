@@ -80,6 +80,17 @@
 	    line-height:1.8;
 	}
 
+	#copyBtn{
+	    width:100%;
+	    padding:15px;
+	    font-size:18px;
+	    border:none;
+ 	    border-radius:10px;
+ 	    background:#1976d2;
+	    color:white;
+	    cursor:pointer;
+	}
+
     </style>
 
 </head>
@@ -97,11 +108,18 @@
 	<h2>あなたの強み TOP5</h2>
 
         <div id="top5Result"></div>
+        
+        <div style="margin-top:20px;">
+            <button id="copyBtn" onclick="copyForAI()">
+                AI診断用テキストをコピー
+            </button>
+        </div>
 
     </div>
 
     <script>
 
+        let aiPromptText = "";
         const savedData = sessionStorage.getItem("strengthAnswers");
 
         if (savedData === null) {
@@ -115,13 +133,13 @@
 
             Promise.all([
                 fetch("data/strength.csv")
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("strength.csvを読み込めませんでした");
-                    }
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("strength.csvを読み込めませんでした");
+                        }
 
-                    return response.text();
-                }),
+                        return response.text();
+                    }),
 
                 fetch("data/category.csv")
                     .then(response => {
@@ -130,9 +148,18 @@
                         }
 
                         return response.text();
+                    }),
+
+                fetch("data/prompt.txt")
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Prompt.txtを読み込めませんでした");
+                        }
+
+                        return response.text();
                     })
             ])
-                .then(([strengthData, categoryData]) => {
+                .then(([strengthData, categoryData, promptTemplate]) => {
 
                     const categoryInfo = {};
                     const strengthInfo = {};
@@ -310,6 +337,31 @@
 
                     document.getElementById("top5Result").innerHTML = top5Html;
 
+                    let top5Text = "";
+
+                    top5.forEach((item, index) => {
+
+                        top5Text +=
+                    `${index + 1}位 ${item.strength}
+
+                    ${strengthInfo[item.strength].description}
+
+                    `;
+                    });
+
+                    let categoryText = "";
+
+                    Object.keys(categoryInfo).forEach(category => {
+
+                        categoryText +=
+                    `${category}：${Math.round(categoryPercent[category])}%\n`;
+
+                    });
+
+                    aiPromptText = promptTemplate
+                        .replace("{CATEGORY}", categoryText)
+                        .replace("{TOP5}", top5Text);
+
                 })
                 .catch(error => {
 
@@ -319,6 +371,14 @@
                     document.getElementById("top5Result").innerHTML = "";
 
                 });
+
+        }
+
+        function copyForAI(){
+
+            navigator.clipboard.writeText(aiPromptText);
+
+            alert("AI診断用テキストをコピーしました");
 
         }
 
