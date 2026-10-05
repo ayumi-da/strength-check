@@ -135,8 +135,17 @@
                 score: score
             };
 
-            sessionStorage.setItem("strengthAnswers", JSON.stringify(answers));
+	    sessionStorage.setItem("strengthAnswers", JSON.stringify(answers));
 	    updateProgress(totalQuestions);
+	    
+	    const nextCard = questionCard.nextElementSibling;
+	    
+	    if (nextCard && nextCard.classList.contains("question-card")) {
+	        nextCard.scrollIntoView({
+	            behavior: "smooth",
+	            block: "start"
+	        });
+	    }
         }
 
         function updateProgress(totalQuestions) {
