@@ -341,20 +341,15 @@
 
                     top5.forEach((item, index) => {
 
-                        top5Text +=
-                    `${index + 1}位 ${item.strength}
+                        top5Text += (index + 1) + "位 " + item.strength + "\n\n" + strengthInfo[item.strength].description + "\n\n";
 
-                    ${strengthInfo[item.strength].description}
-
-                    `;
                     });
 
                     let categoryText = "";
 
                     Object.keys(categoryInfo).forEach(category => {
 
-                        categoryText +=
-                    `${category}：${Math.round(categoryPercent[category])}%\n`;
+                        categoryText += category + "：" + Math.round(categoryPercent[category]) + "%\n\n" + categoryInfo[category].text + "\n\n";
 
                     });
 
