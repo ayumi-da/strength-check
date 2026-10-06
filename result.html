@@ -41,9 +41,36 @@
 
 	.category-header{
 	    display:flex;
+	    gap:12px;
+	    align-items:center;
+	    margin-bottom:6px;
+	}
+	
+	.category-icon{
+	    width:50px;
+	    height:50px;
+	    object-fit:contain;
+	}
+	
+	.category-content{
+	    flex:1;
+	}
+	
+	.category-title-row{
+	    display:flex;
 	    justify-content:space-between;
+	    align-items:center;
 	    margin-bottom:6px;
 	    font-weight:bold;
+	}
+	
+	.category-text{
+	    flex:1;
+	    margin-right:10px;
+	}
+	
+	.category-percent{
+	    white-space:nowrap;
 	}
 
 	.bar-bg{
@@ -257,19 +284,34 @@
                             <div class="category-block">
 
                                 <div class="category-header">
-                                    <span>${category}</span>
-                                    <span>${percent}%</span>
-                                </div>
 
-                                <div class="bar-bg">
-                                    <div
-                                        class="bar-fill"
-                                        style="
-                                            width: ${percent}%;
-                                            background-color:
-                                            ${categoryInfo[category].barColor};
-                                        "
-                                    ></div>
+                                    <img
+                                        class="category         <div class="category-content">
+
+                                        <div class="category-title-row">
+                        
+                                            <div class="category-text">
+                                                ${category}：${categoryInfo[category].text}
+                                            </div>
+                        
+                                            <div class="category-percent">
+                                                ${percent}%
+                                            </div>
+
+                                        </div>
+
+                                        <div class="bar-bg">
+                                            <div
+                                                class="bar-fill"
+                                                style="
+                                                    width:${percent}%;
+                                                    background-color:${categoryInfo[category].barColor};
+                                                "
+                                            ></div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
 
                             </div>
