@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>診断結果</title>
 
     <style>
-
         body{
             font-family:sans-serif;
             max-width:800px;
@@ -27,146 +25,200 @@
             text-align:center;
         }
 
-	.category-row{
-	    display:flex;
-	    justify-content:space-between;
-	    align-items:center;
-	    padding:12px 0;
-	    border-bottom:1px solid #eeeeee;
-	}
+        .category-block{
+            margin-bottom:24px;
+        }
 
-	.category-block{
-	    margin-bottom:20px;
-	}
+        .category-layout{
+            display:flex;
+            align-items:center;
+            gap:15px;
+        }
 
-	.category-header{
-	    display:flex;
-	    gap:12px;
-	    align-items:center;
-	    margin-bottom:6px;
-	}
-	
-	.category-icon{
-	    width:50px;
-	    height:50px;
-	    object-fit:contain;
-	}
-	
-	.category-content{
-	    flex:1;
-	}
-	
-	.category-title-row{
-	    display:flex;
-	    justify-content:space-between;
-	    align-items:center;
-	    margin-bottom:6px;
-	    font-weight:bold;
-	}
-	
-	.category-text{
-	    flex:1;
-	    margin-right:10px;
-	}
-	
-	.category-percent{
-	    white-space:nowrap;
-	}
+        .category-icon{
+            width:70px;
+            height:70px;
+            object-fit:contain;
+            flex-shrink:0;
+        }
 
-	.bar-bg{
-	    width:100%;
-	    height:18px;
-	    background:#e5e5e5;
-	    border-radius:20px;
-	    overflow:hidden;
-	}
+        .category-content{
+            flex:1;
+            min-width:0;
+        }
 
-	.bar-fill{
-	    height:100%;
-	    background:#43a047;
-	    border-radius:20px;
-	    transition:0.5s;
-	}
+        .category-title-row{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:12px;
+            margin-bottom:8px;
+            font-weight:bold;
+        }
 
-	.strength-card{
-    	    display:flex;
-	    align-items: center;
-	    gap:20px;
-	    padding:20px;
-	    border-radius:15px;
-	    margin-bottom:20px;
-	}
+        .category-text{
+            flex:1;
+            line-height:1.5;
+        }
 
-	.strength-name{
-	    font-size:32px;
-	    font-weight:bold;
-	}
+        .category-percent{
+            white-space:nowrap;
+            font-weight:bold;
+        }
 
-	.strength-description{
-	    margin-top:10px;
-	    line-height:1.8;
-	}
+        .bar-bg{
+            width:100%;
+            height:18px;
+            background:#e5e5e5;
+            border-radius:20px;
+            overflow:hidden;
+        }
 
-	#copyBtn{
-	    width:100%;
-	    padding:15px;
-	    font-size:18px;
-	    border:none;
-	    border-radius:10px;
-	    background-color:#222222;
-	    color:white;
-	    cursor:pointer;
-	}
-	
-	#copyBtn:hover{
-	    background-color:#43a047;
-	}
+        .bar-fill{
+            height:100%;
+            background:#43a047;
+            border-radius:20px;
+            transition:0.5s;
+        }
 
+        .strength-card{
+            display:flex;
+            align-items:center;
+            gap:20px;
+            padding:20px;
+            border-radius:15px;
+            margin-bottom:20px;
+        }
+
+        .strength-image{
+            flex-shrink:0;
+        }
+
+        .strength-text{
+            flex:1;
+        }
+
+        .strength-name{
+            font-size:32px;
+            font-weight:bold;
+        }
+
+        .strength-description{
+            margin-top:10px;
+            line-height:1.8;
+        }
+
+        .copy-button{
+            margin-top:20px;
+        }
+
+        #copyBtn{
+            width:100%;
+            padding:15px;
+            font-size:18px;
+            border:none;
+            border-radius:10px;
+            background-color:#222222;
+            color:white;
+            cursor:pointer;
+        }
+
+        #copyBtn:hover{
+            background-color:#43a047;
+        }
+
+        @media (max-width:600px){
+            body{
+                padding:10px;
+            }
+
+            .result-card{
+                padding:20px 15px;
+            }
+
+            .category-layout{
+                gap:10px;
+            }
+
+            .category-icon{
+                width:55px;
+                height:55px;
+            }
+
+            .category-title-row{
+                gap:8px;
+            }
+
+            .category-text{
+                font-size:14px;
+            }
+
+            .category-percent{
+                font-size:14px;
+            }
+
+            .strength-card{
+                align-items:flex-start;
+                gap:12px;
+                padding:15px;
+            }
+
+            .strength-image{
+                width:60px;
+                height:auto;
+            }
+
+            .strength-name{
+                font-size:24px;
+            }
+        }
     </style>
-
 </head>
 
 <body>
-
     <div class="result-card">
-
         <h1>診断結果</h1>
 
-	<h2>カテゴリ別結果</h2>
+        <h2>カテゴリ別結果</h2>
+        <div id="categoryResult"></div>
 
-	<div id="categoryResult"></div>
-
-	<h2>あなたの強み TOP5</h2>
-
+        <h2>あなたの強み TOP5</h2>
         <div id="top5Result"></div>
-        
-        <div style="margin-top:20px;">
-            <button id="copyBtn" onclick="copyForAI()">
+
+        <div class="copy-button">
+            <button
+                id="copyBtn"
+                type="button"
+                onclick="copyForAI()"
+            >
                 AI診断用テキストをコピー
             </button>
         </div>
-
     </div>
 
     <script>
-
         let aiPromptText = "";
-        const savedData = sessionStorage.getItem("strengthAnswers");
+
+        const savedData =
+            sessionStorage.getItem("strengthAnswers");
 
         if (savedData === null) {
+            document.getElementById("categoryResult").innerHTML =
+                "<p>回答データが見つかりません。診断ページから回答してください。</p>";
 
-            document.getElementById("categoryResult").innerHTML = "<p>回答データが見つかりません。診断ページから回答してください。</p>";
             document.getElementById("top5Result").innerHTML = "";
 
+            document.getElementById("copyBtn").disabled = true;
         } else {
-
             const answers = JSON.parse(savedData);
 
             Promise.all([
                 fetch("data/strength.csv")
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error("strength.csvを読み込めませんでした");
+                            throw new Error(
+                                "strength.csvを読み込めませんでした"
+                            );
                         }
 
                         return response.text();
@@ -175,7 +227,9 @@
                 fetch("data/category.csv")
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error("category.csvを読み込めませんでした");
+                            throw new Error(
+                                "category.csvを読み込めませんでした"
+                            );
                         }
 
                         return response.text();
@@ -184,14 +238,19 @@
                 fetch("data/prompt.txt")
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error("Prompt.txtを読み込めませんでした");
+                            throw new Error(
+                                "prompt.txtを読み込めませんでした"
+                            );
                         }
 
                         return response.text();
                     })
             ])
-                .then(([strengthData, categoryData, promptTemplate]) => {
-
+                .then(([
+                    strengthData,
+                    categoryData,
+                    promptTemplate
+                ]) => {
                     const categoryInfo = {};
                     const strengthInfo = {};
                     const categoryScores = {};
@@ -203,27 +262,27 @@
                             .trim()
                             .split(/\r?\n/);
 
-                    categoryLines.slice(1).forEach(line => {
+                    categoryLines
+                        .slice(1)
+                        .forEach(line => {
+                            const [
+                                category,
+                                image,
+                                color,
+                                barColor,
+                                text
+                            ] = line.split(",");
 
-                        const [
-                            category,
-                            image,
-                            color,
-                            barColor,
-                            text
-                        ] = line.split(",");
+                            categoryInfo[category] = {
+                                image:image,
+                                color:color,
+                                barColor:barColor,
+                                text:text
+                            };
 
-                        categoryInfo[category] = {
-                            image: image,
-                            color: color,
-                            barColor: barColor,
-                            text: text
-                        };
-
-                        categoryScores[category] = 0;
-                        categoryMax[category] = 0;
-
-                    });
+                            categoryScores[category] = 0;
+                            categoryMax[category] = 0;
+                        });
 
                     const strengthLines =
                         strengthData
@@ -231,101 +290,115 @@
                             .trim()
                             .split(/\r?\n/);
 
-                    strengthLines.slice(1).forEach(line => {
+                    strengthLines
+                        .slice(1)
+                        .forEach(line => {
+                            const [
+                                strength,
+                                category,
+                                text,
+                                description
+                            ] = line.split(",");
 
-                        const [
-                            strength,
-                            category,
-                            text,
-                            description
-                        ] = line.split(",");
+                            strengthInfo[strength] = {
+                                category:category,
+                                text:text,
+                                description:description
+                            };
 
-                        strengthInfo[strength] = {
-                            category: category,
-                            text: text,
-                            description: description
-                        };
+                            if (
+                                categoryMax[category] !==
+                                undefined
+                            ) {
+                                categoryMax[category] += 7;
+                            }
+                        });
 
-                        if (categoryMax[category] !== undefined) {
-                            categoryMax[category] += 7;
-                        }
-
-                    });
-
-                    Object.values(answers).forEach(answer => {
-
-                        if (categoryScores[answer.category] !== undefined) {
-                            categoryScores[answer.category] += answer.score;
-                        }
-
-                    });
+                    Object.values(answers)
+                        .forEach(answer => {
+                            if (
+                                categoryScores[
+                                    answer.category
+                                ] !== undefined
+                            ) {
+                                categoryScores[
+                                    answer.category
+                                ] += answer.score;
+                            }
+                        });
 
                     const categoryPercent = {};
 
-                    Object.keys(categoryScores).forEach(category => {
+                    Object.keys(categoryScores)
+                        .forEach(category => {
+                            const maxScore =
+                                categoryMax[category];
 
-                        const maxScore = categoryMax[category];
-
-                        if (maxScore === 0) {
-                            categoryPercent[category] = 0;
-                        } else {
-                            categoryPercent[category] = categoryScores[category] / maxScore * 100;
-                        }
-
-                    });
+                            if (maxScore === 0) {
+                                categoryPercent[category] = 0;
+                            } else {
+                                categoryPercent[category] =
+                                    categoryScores[category] /
+                                    maxScore *
+                                    100;
+                            }
+                        });
 
                     let categoryHtml = "";
 
-                    Object.keys(categoryInfo).forEach(category => {
+                    Object.keys(categoryInfo)
+                        .forEach(category => {
+                            const percent =
+                                Math.round(
+                                    categoryPercent[category]
+                                );
 
-                        const percent = Math.round(categoryPercent[category]);
+                            categoryHtml += `
+                                <div class="category-block">
+                                    <div class="category-layout">
 
-                        categoryHtml += `
-                            <div class="category-block">
+                                        <img
+                                            class="category-icon"
+                                            src="${categoryInfo[category].image}"
+                                            alt="${category}"
+                                        >
 
-                                <div class="category-header">
+                                        <div class="category-content">
 
-                                    <img
-                                        class="category         <div class="category-content">
+                                            <div class="category-title-row">
+                                                <div class="category-text">
+                                                    ${category}：${categoryInfo[category].text}
+                                                </div>
 
-                                        <div class="category-title-row">
-                        
-                                            <div class="category-text">
-                                                ${category}：${categoryInfo[category].text}
+                                                <div class="category-percent">
+                                                    ${percent}%
+                                                </div>
                                             </div>
-                        
-                                            <div class="category-percent">
-                                                ${percent}%
+
+                                            <div class="bar-bg">
+                                                <div
+                                                    class="bar-fill"
+                                                    style="
+                                                        width:${percent}%;
+                                                        background-color:${categoryInfo[category].barColor};
+                                                    "
+                                                ></div>
                                             </div>
 
                                         </div>
-
-                                        <div class="bar-bg">
-                                            <div
-                                                class="bar-fill"
-                                                style="
-                                                    width:${percent}%;
-                                                    background-color:${categoryInfo[category].barColor};
-                                                "
-                                            ></div>
-                                        </div>
-
                                     </div>
-
                                 </div>
+                            `;
+                        });
 
-                            </div>
-                        `;
+                    document.getElementById(
+                        "categoryResult"
+                    ).innerHTML = categoryHtml;
 
-                    });
-
-                    document.getElementById("categoryResult").innerHTML =
-                    categoryHtml;
-
-                    const strengthRanking = Object.values(answers);
+                    const strengthRanking =
+                        Object.values(answers);
 
                     strengthRanking.sort((a, b) => {
-
                         if (a.score !== b.score) {
                             return b.score - a.score;
                         }
@@ -340,24 +413,25 @@
                             );
                         }
 
-                        return a.strength.localeCompare(b.strength, "ja");
-
+                        return a.strength.localeCompare(
+                            b.strength,
+                            "ja"
+                        );
                     });
 
-                    const top5 = strengthRanking.slice(0, 5);
+                    const top5 =
+                        strengthRanking.slice(0, 5);
 
                     let top5Html = "";
 
                     top5.forEach((item, index) => {
-
                         top5Html += `
                             <div
                                 class="strength-card"
                                 style="
-                                    background-color:
-                                    ${categoryInfo[item.category].color};"
+                                    background-color:${categoryInfo[item.category].color};
+                                "
                             >
-
                                 <img
                                     class="strength-image"
                                     src="${categoryInfo[item.category].image}"
@@ -365,7 +439,6 @@
                                 >
 
                                 <div class="strength-text">
-
                                     <div class="strength-name">
                                         ${index + 1}位 ${item.strength}
                                     </div>
@@ -373,57 +446,97 @@
                                     <div class="strength-description">
                                         ${strengthInfo[item.strength].description}
                                     </div>
-
                                 </div>
-
                             </div>
                         `;
-
                     });
 
-                    document.getElementById("top5Result").innerHTML = top5Html;
+                    document.getElementById(
+                        "top5Result"
+                    ).innerHTML = top5Html;
 
                     let top5Text = "";
 
                     top5.forEach((item, index) => {
-
-                        top5Text += (index + 1) + "位 " + item.strength + "\n\n" + strengthInfo[item.strength].description + "\n\n";
-
+                        top5Text +=
+                            (index + 1) +
+                            "位 " +
+                            item.strength +
+                            "\n\n" +
+                            strengthInfo[
+                                item.strength
+                            ].description +
+                            "\n\n";
                     });
 
                     let categoryText = "";
 
-                    Object.keys(categoryInfo).forEach(category => {
+                    Object.keys(categoryInfo)
+                        .forEach(category => {
+                            categoryText +=
+                                category +
+                                "：" +
+                                Math.round(
+                                    categoryPercent[category]
+                                ) +
+                                "%\n\n" +
+                                categoryInfo[category].text +
+                                "\n\n";
+                        });
 
-                        categoryText += category + "：" + Math.round(categoryPercent[category]) + "%\n\n" + categoryInfo[category].text + "\n\n";
-
-                    });
-
-                    aiPromptText = promptTemplate
-                        .replace("{CATEGORY}", categoryText)
-                        .replace("{TOP5}", top5Text);
-
+                    aiPromptText =
+                        promptTemplate
+                            .replace(
+                                "{CATEGORY}",
+                                categoryText
+                            )
+                            .replace(
+                                "{TOP5}",
+                                top5Text
+                            );
                 })
                 .catch(error => {
-
                     console.error(error);
 
-                    document.getElementById("categoryResult").innerHTML = "<p>診断データの読み込みに失敗しました。</p>";
-                    document.getElementById("top5Result").innerHTML = "";
+                    document.getElementById(
+                        "categoryResult"
+                    ).innerHTML =
+                        "<p>診断データの読み込みに失敗しました。</p>";
 
+                    document.getElementById(
+                        "top5Result"
+                    ).innerHTML = "";
+
+                    document.getElementById(
+                        "copyBtn"
+                    ).disabled = true;
                 });
-
         }
 
-        function copyForAI(){
+        function copyForAI() {
+            if (aiPromptText === "") {
+                alert(
+                    "コピーする診断結果がまだ準備できていません。"
+                );
 
-            navigator.clipboard.writeText(aiPromptText);
+                return;
+            }
 
-            alert("AI診断用テキストをコピーしました");
+            navigator.clipboard
+                .writeText(aiPromptText)
+                .then(() => {
+                    alert(
+                        "AI診断用テキストをコピーしました"
+                    );
+                })
+                .catch(error => {
+                    console.error(error);
 
+                    alert(
+                        "テキストをコピーできませんでした"
+                    );
+                });
         }
-
     </script>
 </body>
-
 </html>
